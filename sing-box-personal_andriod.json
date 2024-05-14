@@ -86,7 +86,7 @@
     {
       "type": "tun",
       "inet4_address": "172.19.0.1/30",
-//      "inet6_address": "fdfe:dcba:9876::1/126",
+      "inet6_address": "fdfe:dcba:9876::1/126",
       "stack": "mixed",
       "sniff": true,
       "auto_route": true,
@@ -504,6 +504,13 @@
       {
         "clash_mode": "Global",
         "outbound": "GLOBAL"
+      },
+      {
+        "domain": [
+          "syncthing.net",
+          "gnome.org"
+        ],
+        "outbound": "direct"
       },
       {
         "rule_set": [
