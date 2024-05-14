@@ -1,0 +1,858 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "output": "box.log",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "local",
+        "address": "https://223.5.5.5/dns-query",
+        "address_resolver": "dns_resolver",
+        "strategy": "ipv4_only",
+        "detour": "direct"
+      },
+      {
+        "tag": "cloudflare",
+        "address": "https://1.1.1.1/dns-query",
+        "address_resolver": "dns_resolver",
+        "strategy": "ipv4_only",
+        "detour": "proxy"
+      },
+      {
+        "tag": "block",
+        "address": "rcode://success"
+      },
+      {
+        "tag": "fakeip",
+        "address": "fakeip"
+      },
+      {
+        "tag": "dns_resolver",
+        "address": "223.5.5.5",
+        "strategy": "ipv4_only",
+        "detour": "direct"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "local"
+      },
+      {
+        "clash_mode": "Direct",
+        "server": "local"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "fakeip"
+      },
+      {
+        "rule_set": "geosite-cn",
+        "server": "local"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "GeoIP2-CN"
+          }
+        ],
+        "server": "cloudflare"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip"
+      }
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "stack": "system",
+      "sniff": true,
+      "auto_route": true,
+      "inet4_route_address": [
+        "0.0.0.0/1",
+        "128.0.0.0/1"
+      ],
+      "inet6_route_address": [
+        "::/1",
+        "8000::/1"
+      ],
+      "inet4_route_exclude_address": [
+        "192.168.0.0/16"
+      ],
+      "inet6_route_exclude_address": [
+        "fc00::/7"
+      ],
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      },
+      "exclude_package": [
+        "com.coloros.backuprestore",
+        "com.oplus.healthservice",
+        "com.oneplus.member",
+        "com.oppo.ctautoregist",
+        "com.coloros.alarmclock.PuiThemeWidget",
+        "com.oplus.smartengine",
+        "com.homelink.android",
+        "com.android.providers.telephony",
+        "com.oplus.securitykeyboard",
+        "com.android.dynsystem",
+        "com.unionpay.tsmservice",
+        "com.oplus.crashbox",
+        "com.opluskgd.onetaplocking",
+        "com.heytap.pictorial",
+        "com.coloros.smartsidebar",
+        "com.android.providers.calendar",
+        "com.android.providers.media",
+        "com.coloros.karaoke",
+        "com.alicloud.databox",
+        "com.heytap.cloud",
+        "com.oplus.location",
+        "com.lalamove.huolala.client",
+        "com.finshell.wallet",
+        "com.sankuai.meituan",
+        "com.guanaitong",
+        "com.android.launcher",
+        "com.oplus.onetrace",
+        "com.douban.frodo",
+        "com.coloros.translate",
+        "cn.com.langeasy.LangEasyLexis",
+        "com.oplus.screenrecorder",
+        "com.csair.mbp",
+        "com.android.htmlviewer",
+        "com.coloros.healthcheck",
+        "com.sspai.sspaiandroid",
+        "com.qualcomm.qti.uceShimService",
+        "com.tencent.androidqqmail",
+        "com.coloros.weather.service",
+        "com.android.mms.service",
+        "com.xiachufang",
+        "com.android.providers.downloads",
+        "com.dianping.v1",
+        "com.oplus.powermonitor",
+        "com.heytap.ocsp.client",
+        "com.oplus.audiomonitor",
+        "com.plan.kot32.tomatotime",
+        "com.oneplus.brickmode",
+        "cmb.pb",
+        "com.oplus.interconnectcollectkit",
+        "com.oplus.deepthinker",
+        "com.oplus.qualityprotect",
+        "cn.gov.tax.its",
+        "com.oplus.apprecover",
+        "com.oplus.themestore",
+        "com.MobileTicket",
+        "com.oplus.aod",
+        "com.oplus.dmp",
+        "com.oplus.eid",
+        "com.oplus.nas",
+        "com.oplus.nhs",
+        "com.oplus.ocs",
+        "com.oplus.olc",
+        "com.oplus.ota",
+        "com.oplus.pay",
+        "com.oplus.sau",
+        "com.oplus.sos",
+        "com.oplus.vdc",
+        "com.heytap.market",
+        "com.coloros.systemclone",
+        "com.oplus.exserviceui",
+        "com.oplus.romupdate",
+        "com.coloros.sharescreen.PuiThemeShareScreenIcon",
+        "com.heytap.openid",
+        "com.baidu.input_oppo",
+        "com.coloros.oshare.PuiThemeOShareIcon",
+        "me.ele",
+        "com.oplus.ocar.PuiThemeOCarIcon",
+        "com.android.providers.downloads.ui",
+        "com.coloros.oshare",
+        "com.xingin.xhs",
+        "com.coloros.scenemode",
+        "com.tencent.mm",
+        "com.oplus.framework_bluetooth.overlay",
+        "com.chinamworld.bocmbci",
+        "com.wapi.wapicertmanage",
+        "com.umetrip.android.msky.app",
+        "com.qti.qualcomm.datastatusnotification",
+        "io.github.fplus",
+        "com.coloros.bootreg",
+        "android",
+        "com.mycp.videocompress",
+        "com.android.contacts",
+        "com.oplus.notificationmanager",
+        "com.shizhuang.duapp",
+        "com.ted.number",
+        "com.oplus.upgradeguide",
+        "com.oplus.travelengine",
+        "com.oplus.pantanal.ums",
+        "com.drakeet.purewriter",
+        "com.android.mms",
+        "com.android.mtp",
+        "com.android.nfc",
+        "com.android.ons",
+        "com.android.stk",
+        "com.icbc",
+        "bin.mt.plus.canary",
+        "com.coloros.assistantscreen",
+        "com.yek.android.kfc.activitys",
+        "com.coloros.familyguard",
+        "com.lerist.fakelocation",
+        "com.taobao.movie.android",
+        "com.coloros.activation",
+        "bin.mt.plus",
+        "com.oplus.audio.effectcenter",
+        "com.android.settings.intelligence",
+        "com.bytedance.ep.android",
+        "com.coloros.shortcuts",
+        "com.mfcloudcalculate.networkdisk",
+        "com.apkpure.aegon",
+        "com.eastmoney.android.berlin",
+        "com.qualcomm.qti.xrvd.service",
+        "cn.gov.pbc.dcep",
+        "com.android.providers.settings",
+        "com.android.sharedstoragebackup",
+        "com.oplus.eyeprotect",
+        "com.android.printspooler",
+        "com.coloros.accessibilityassistant",
+        "com.tencent.qqpimsecure",
+        "com.oplus.synergy",
+        "com.android.incallui",
+        "com.oppo.instant.local.service",
+        "com.android.se",
+        "com.android.inputdevices",
+        "com.yaya.zone",
+        "com.coloros.securityguard",
+        "cn.wps.moffice.lite",
+        "com.oplus.supertextinput",
+        "com.redteamobile.roaming",
+        "com.heytap.speechassist",
+        "com.tencent.map",
+        "com.coloros.translate.engine",
+        "com.android.bips",
+        "info.muge.appshare",
+        "com.coloros.floatassistant.PuiThemeFloatAssistantIcon",
+        "com.qti.dpmserviceapp",
+        "com.mxtech.videoplayer.ad",
+        "com.oplus.overlay.comms",
+        "com.tencent.weread",
+        "com.oplus.bttestmode",
+        "com.coloros.codebook",
+        "com.oplus.customize.coreapp",
+        "com.oplus.uiengine",
+        "com.eusoft.eudic",
+        "com.oplus.statistics.rom",
+        "oplus",
+        "com.coloros.smartlock",
+        "com.coloros.weather2",
+        "com.ktls.fileinfo",
+        "net.csdn.csdnplus",
+        "com.android.server.telecom",
+        "com.android.keychain",
+        "com.coloros.compass2",
+        "com.oplus.wirelesssettings",
+        "com.ss.android.ugc.aweme",
+        "com.coloros.note",
+        "com.coloros.digitalwellbeing",
+        "com.farplace.qingzhuo",
+        "com.android.calllogbackup",
+        "com.tencent.mobileqq",
+        "com.oplus.acc.gac",
+        "com.oplus.account",
+        "com.android.localtransport",
+        "com.android.packageinstaller",
+        "com.aiunit.aon",
+        "com.oplus.uxdesign",
+        "com.coloros.lockassistant",
+        "com.android.intentresolver",
+        "com.oplus.appplatform",
+        "com.wangc.bill",
+        "com.clover.daysmatter",
+        "com.coloros.sceneservice",
+        "com.coloros.calculator",
+        "com.fvcorp.android.aijiasuclient",
+        "com.opos.ads",
+        "com.tencent.soter.soterserver",
+        "com.coloros.calendar",
+        "com.oplus.framework.rro.oneplus",
+        "com.coloros.alarmclock",
+        "com.oplus.atlas",
+        "com.oplus.cupid",
+        "com.oplus.ether",
+        "com.oplus.games",
+        "com.zhihu.android",
+        "com.oplus.metis",
+        "com.oplus.omoji",
+        "com.oplus.owork",
+        "com.oplus.stdsp",
+        "com.oplus.consumerIRApp",
+        "com.ai.obc.cbn.app",
+        "com.oplus.exsystemservice",
+        "com.fido.fido2client",
+        "com.manmanbuy.bijia",
+        "com.coolapk.market",
+        "com.oplus.sauhelper",
+        "com.android.wallpaper.livepicker",
+        "com.oplus.wallpapers",
+        "com.oplus.encryption",
+        "com.wiwj.xiangyucustomer",
+        "com.coloros.phonemanager",
+        "com.coloros.securepay",
+        "com.Qunar",
+        "com.tongcheng.android",
+        "cn.damai",
+        "com.oplus.cardigitalkey",
+        "com.oplus.battery.PuiThemeOPlusBatteryQSIcon",
+        "com.coloros.findmyphone",
+        "com.heytap.colorfulengine",
+        "com.oplus.trafficmonitor",
+        "com.oplus.blacklistapp",
+        "com.heytap.opluscarlink",
+        "com.coloros.directui",
+        "com.android.settings",
+        "com.heytap.mcs",
+        "com.oplus.wifibackuprestore",
+        "com.heytap.tas",
+        "com.jingdong.app.mall",
+        "com.heytap.browser",
+        "make.more.r2d2.cellular_z",
+        "com.oplus.battery",
+        "com.oplus.owkservice",
+        "com.taptap",
+        "com.oplus.virtualcomm",
+        "com.heytap.quicksearchbox",
+        "com.autonavi.minimap",
+        "com.oplus.multiapp",
+        "com.oplus.engineercamera",
+        "com.oplus.postmanservice",
+        "com.taobao.idlefish",
+        "com.oppo.store",
+        "org.zywx.wbpalmstar.widgetone.uex11296876",
+        "wellcee.dream",
+        "make.more.r2d2.cellular_pro",
+        "ctrip.android.view",
+        "com.coloros.sharescreen",
+        "com.oplus.portrait",
+        "com.oplus.camera.PUIThemedLogoInfoPicture",
+        "cn.ticktick.task",
+        "com.coloros.video",
+        "com.kmxs.reader",
+        "com.tencent.wemeet.app",
+        "com.heytap.accessory",
+        "com.yipiao",
+        "com.coloros.filemanager",
+        "youqu.android.todesk",
+        "com.oplus.gesture",
+        "com.oplus.securitypermission",
+        "com.coloros.ocrscanner",
+        "com.coloros.mapcom.frame",
+        "com.nearme.instant.platform",
+        "com.coloros.soundrecorder",
+        "com.sina.weibo",
+        "com.oplus.aiunit",
+        "com.android.phone",
+        "com.oplus.cast",
+        "com.oplus.cosa",
+        "com.oplus.lfeh",
+        "com.oplus.ndsf",
+        "com.oplus.ocar",
+        "com.oplus.onet",
+        "com.oplus.athena",
+        "com.android.wallpaperbackup",
+        "com.android.providers.blockednumber",
+        "com.android.providers.userdictionary",
+        "com.android.providers.media.module",
+        "com.oplus.camera",
+        "com.lianjia.beike",
+        "com.One.WoodenLetter",
+        "com.oplus.linker.PuiThemeOPlusLinkerIcon",
+        "com.android.location.fused",
+        "com.android.systemui",
+        "com.oplus.phonenoareainquire",
+        "com.alibaba.aliyun",
+        "com.oplus.eyeprotect.PuiThemeEyeprotectIcon",
+        "com.oplus.evolution",
+        "com.heytap.themestore",
+        "com.baidu.netdisk.youth",
+        "com.heytap.mydevices",
+        "com.oplus.consumerIRApp.PuiThemeIRAppIcon",
+        "com.oplus.screenrecorder.PuiThemeScreenRecorderIcon",
+        "com.android.permissioncontroller",
+        "com.baidu.netdisk",
+        "net.zhikejia.maomaotrip",
+        "com.oplus.viewtalk",
+        "com.coloros.operationManual",
+        "com.oplus.ovoicemanager.wakeup",
+        "vendor.qti.imsdatachannel",
+        "com.coloros.floatassistant",
+        "com.oplus.safecenter",
+        "com.coloros.childrenspace",
+        "com.oplus.thirdkit",
+        "com.taobao.taobao",
+        "com.oplus.linker",
+        "com.oplus.logkit",
+        "com.china3s.android",
+        "com.xiaomi.smarthome",
+        "com.heytap.htms",
+        "com.oplus.melody",
+        "com.cmbchina.ccd.pluto.cmbActivity",
+        "com.coloros.gallery3d",
+        "com.oplus.nrMode",
+        "com.coloros.favorite",
+        "com.oplus.obrain",
+        "com.oplus.ocloud",
+        "com.android.bluetooth",
+        "com.oplus.engineermode",
+        "com.qualcomm.atfwd",
+        "com.ktls.automation",
+        "com.android.providers.contacts",
+        "com.ss.android.yumme.video",
+        "com.netease.cloudmusic",
+        "com.ct.client",
+        "vendor.qti.imsrcs",
+        "tv.danmaku.bili",
+        "com.oplus.screenshot",
+        "com.coloros.colordirectservice",
+        "com.eg.android.AlipayGphone",
+        "com.heytap.smarthome",
+        "com.oplus.subsys",
+        "com.coloros.remoteguardservice",
+        "com.oplus.engineernetwork",
+        "com.greenpoint.android.mc10086.activity",
+        "com.youdao.translator",
+        "com.oplus.ovoicemanager",
+        "com.maimemo.android.momo",
+        "com.taobao.trip"
+      ]
+    },
+    {
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7890,
+      "sniff": true
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "outbound": "dns-out"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "block"
+      },
+      {
+        "protocol": "quic",
+        "port": 22000,
+        "outbound": "direct"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "Global",
+        "outbound": "GLOBAL"
+      },
+      {
+        "rule_set": [
+          "geoip-google",
+          "geosite-google"
+        ],
+        "outbound": "google"
+      },
+      {
+        "rule_set": "geosite-youtube",
+        "outbound": "youtube"
+      },
+      {
+        "rule_set": [
+          "geoip-telegram",
+          "geosite-telegram"
+        ],
+        "outbound": "telegram"
+      },
+      {
+        "rule_set": "openai",
+        "outbound": "openai"
+      },
+      {
+        "rule_set": [
+          "geosite-cn",
+          "GeoIP2-CN",
+          "geosite-apple@cn"
+        ],
+        "outbound": "cn"
+      },
+      {
+        "rule_set": "geosite-geolocation-!cn",
+        "outbound": "proxy"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "geosite-geolocation-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-apple@cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple@cn.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "GeoIP2-CN",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://wiki.jokin.uk/cnip2.srs",
+        "download_detour": "proxy"
+      },
+      {
+        "tag": "geoip-google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "openai",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/openai.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geoip-telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs",
+        "download_detour": "direct"
+      }
+    ],
+    "final": "final",
+    "auto_detect_interface": true
+  },
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "type": "selector",
+      "outbounds": [
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all",
+        "direct"
+      ],
+      "default": "hk-auto"
+    },
+    {
+      "tag": "google",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "proxy"
+    },
+    {
+      "tag": "youtube",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "proxy"
+    },
+    {
+      "tag": "telegram",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "proxy"
+    },
+    {
+      "tag": "openai",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "proxy"
+    },
+    {
+      "tag": "cn",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "direct"
+    },
+    {
+      "tag": "final",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "proxy"
+    },
+    {
+      "tag": "hk",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "tw",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "jp",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "sg",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "us",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "all",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "hk-auto",
+      "type": "urltest",
+      "outbounds": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    {
+      "tag": "tw-auto",
+      "type": "urltest",
+      "outbounds": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    {
+      "tag": "jp-auto",
+      "type": "urltest",
+      "outbounds": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    {
+      "tag": "sg-auto",
+      "type": "urltest",
+      "outbounds": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    {
+      "tag": "GLOBAL",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "proxy",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "all"
+      ],
+      "default": "direct"
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "block",
+      "type": "block"
+    },
+    {
+      "tag": "dns-out",
+      "type": "dns"
+    }
+  ],
+  "experimental": {
+    "clash_api": {
+      "external_controller": "0.0.0.0:9090",
+      "external_ui": "ui",
+      "secret": "",
+      "external_ui_download_url": "https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "direct"
+    },
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true
+    }
+  }
+}
