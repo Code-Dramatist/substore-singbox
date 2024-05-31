@@ -171,7 +171,8 @@
       {
         "domain": [
           "syncthing.net",
-          "nmcheck.gnome.org"
+          "nmcheck.gnome.org",
+          "openrouter.ai"
         ],
         "outbound": "direct"
       },
