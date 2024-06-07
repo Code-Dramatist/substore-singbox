@@ -86,6 +86,7 @@
     {
       "type": "tun",
       "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
       "stack": "mixed",
       "sniff": true,
       "auto_route": true,
@@ -93,8 +94,15 @@
         "0.0.0.0/1",
         "128.0.0.0/1"
       ],
+      "inet6_route_address": [
+        "::/1",
+        "8000::/1"
+      ],
       "inet4_route_exclude_address": [
         "192.168.0.0/16"
+      ],
+      "inet6_route_exclude_address": [
+        "fc00::/7"
       ],
       "platform": {
         "http_proxy": {
@@ -164,8 +172,7 @@
         "domain": [
           "syncthing.net",
           "nmcheck.gnome.org",
-          "openrouter.ai",
-          "clerk.openrouter.ai"
+          "openrouter.ai"
         ],
         "outbound": "direct"
       },
