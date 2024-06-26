@@ -508,8 +508,7 @@
       {
         "domain": [
           "syncthing.net",
-          "gnome.org",
-          "openrouter.ai"
+          "gnome.org"
         ],
         "outbound": "direct"
       },
