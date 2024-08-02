@@ -231,7 +231,7 @@
         "type": "remote",
         "format": "binary",
         "url": "https://wiki.jokin.uk/cnip2.srs",
-        "download_detour": "proxy"
+        "download_detour": "direct"
       },
       {
         "tag": "geoip-google",
